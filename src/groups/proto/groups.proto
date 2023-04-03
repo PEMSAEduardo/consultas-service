@@ -1,0 +1,68 @@
+import "../../accounts/proto/accounts.proto";
+syntax = "proto3";
+
+package groups;
+
+enum TypeGroup {
+    Grupo = 2;
+    Dealer = 3;
+}
+
+// Requests
+message GroupsRequestFilter{
+    bool showAccounts = 1;
+    bool zones = 2;
+    bool partitions = 3;
+    bool users = 4;
+    bool contacts = 5;
+    bool panel = 6;
+    bool security = 7;
+    bool generalData = 8;
+    bool deviceZone = 9;
+    StateAccount state = 10;
+}
+
+message GroupRequestFilter{
+    GroupRequest group = 1;
+    bool showAccounts = 2;
+    bool zones = 3;
+    bool partitions = 4;
+    bool users = 5;
+    bool contacts = 6;
+    bool panel = 7;
+    bool security = 8;
+    bool generalData = 9;
+    bool deviceZone = 10;
+    StateAccount state = 11;
+}
+
+message SearchRequestGroup{
+    repeated GroupRequest groups = 1;
+    bool showAccounts = 2;
+    bool zones = 3;
+    bool partitions = 4;
+    bool users = 5;
+    bool contacts = 6;
+    bool panel = 7;
+    bool security = 8;
+    bool generalData = 9;
+    bool deviceZone = 10;
+    StateAccount state = 11;
+}
+
+message GroupRequest{
+    int32 id = 1;
+    TypeGroup type = 2;
+}
+
+// Respuestas 
+message Group {
+    int32 Codigo = 1;
+    string Nombre = 2;
+    int32 Tipo = 3;
+    repeated Account accounts = 4; 
+}
+
+message ResponseGroups{
+    repeated Group groups = 1;
+}

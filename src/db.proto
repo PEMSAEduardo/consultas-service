@@ -1,0 +1,26 @@
+import "./accounts/proto/accounts.proto";
+import "./groups/proto/groups.proto";
+import "./events/proto/events.proto";
+
+
+syntax = "proto3";
+
+package db;
+
+
+service DbService {
+    // For events
+    rpc GetEventsFromGroup(EventsGrouprequest) returns (GroupsEventsResponse);
+    rpc GetEvents(EventsRequest) returns (AccountsEventResponse);
+    rpc GetEventsWithOutAccounts(EventsWOAccountRequest) returns (AccountsEventResponse);
+    rpc GetTopEventsFromGroup (EventsTopGroupRequest) returns (GroupsEventsTopResponse);
+    rpc GetTopEvents (EventsTopRequest) returns (AccountsTopEventResponse);
+    // For accounts
+    rpc AllAccounts (FilterRequest) returns (AccountsResponse);
+    rpc SearchAccounts (AccountsRequest) returns (AccountsResponse);
+    rpc FindOneAccount (AccountRequest) returns (Account);
+    // For groups
+    rpc AllGroups (GroupsRequestFilter) returns (ResponseGroups);
+    rpc SearchGroups (SearchRequestGroup) returns (ResponseGroups);
+    rpc FindOneGroup (GroupRequestFilter) returns (Group);
+}

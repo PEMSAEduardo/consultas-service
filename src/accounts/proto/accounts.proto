@@ -1,0 +1,113 @@
+syntax = "proto3";
+
+package accounts;
+
+enum StateAccount {
+    Todas = 0;
+    Activas = 1;
+    Inactivas = 2;
+}
+
+// Individual Account Response
+message Account {
+    string CodigoCte = 1;
+    string CodigoAbonado = 2;
+    string Nombre = 3;
+    string Direccion = 4;
+    string Status = 5;
+    Panel panel = 6;
+    repeated Partition particiones = 7;
+    repeated Zone zonas = 8;
+    repeated User usuarios = 9;
+    repeated Contact contactos = 10;
+    GeneralData datosGeneralesDetallados = 11;
+    Security seguridad = 12;
+}
+// All messages for account ***************************************
+message Panel{
+    string Modelo = 1;
+    bool AccesoPorGPRS = 2;
+    bool AccesoPorIP = 3;
+    bool AccesoPorLinea = 4;
+    bool SinEnlace = 5;
+    string CoordGPS = 6;
+}
+message Partition{
+    int32 CodigoParticion = 1;
+    string NombreParticion = 2;
+    // string CodigoCte = 3;
+}
+message Zone {
+    string CodigoZona = 1;
+    string Descripcion = 2;
+    string Observacion = 3;
+    string Dispositivo1 = 4;
+    int32 Cantidad1 = 5;
+    string Dispositivo2 = 6;
+    int32 Cantidad2 = 7;
+    string Dispositivo3 = 8;
+    int32 Cantidad3 = 9;
+}
+message User {
+    string CodigoUsuario = 1;
+    string NombreUsuario = 2;
+    string Clave = 3;
+    string ObservacionUsuario = 4;
+}
+message Contact {
+    int32 Orden = 1;
+    string Telefono = 2;
+    string Contacto = 3;
+    string PalabraDeSeg = 4;
+    string Observaciones = 5;
+    int32 CodigoAutoridad = 6;
+}
+message GeneralData{
+    string Estado = 1;
+    string Ubicacion = 2;
+    string Municipio = 3;
+}
+message Security{
+    string PalabraDeSeg = 1;
+    string PalabraDeSegTA = 2;
+    string Amago = 3;
+}
+// End All messages for account **************************************
+
+message AccountRequest{
+    int32 account = 1;
+    bool zones = 2;
+    bool partitions = 3;
+    bool users = 4;
+    bool contacts = 5;
+    bool panel = 6;
+    bool security = 7;
+    bool generalData = 8;
+    bool deviceZone = 9;
+}
+message AccountsResponse {
+    repeated Account accounts = 1;
+}
+message FilterRequest {
+    bool zones = 1;
+    bool partitions = 2;
+    bool users = 3;
+    bool contacts = 4;
+    bool panel = 5;
+    bool security = 6;
+    bool generalData = 7;
+    bool deviceZone = 8;
+    StateAccount state = 9;
+}
+message AccountsRequest {
+    repeated int32 accounts = 1;
+    bool zones = 2;
+    bool partitions = 3;
+    bool users = 4;
+    bool contacts = 5;
+    bool panel = 6;
+    bool security = 7;
+    bool generalData = 8;
+    bool deviceZone = 9;
+    StateAccount state = 10;
+}

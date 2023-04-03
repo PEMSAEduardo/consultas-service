@@ -1,0 +1,182 @@
+import "../../accounts/proto/accounts.proto";
+import "../../groups/proto/groups.proto";
+
+syntax = "proto3";
+
+package events;
+enum TypeCode {
+    Evento = 2;
+    Alarma = 1;
+}
+enum Order {
+    ASC = 1;
+    DESC = 2;
+}
+
+
+// For request ***********************
+message EventsGrouprequest {
+    TypeGroup typeAccount = 1;
+    repeated int32 accounts = 2;
+    StateAccount state = 3;
+    string dateStart = 4;
+    string dateEnd = 5;
+    string startQuery = 6;
+    string endQuery = 7;
+    bool exclude = 8;
+    bool scheduled = 9;
+    bool comments = 10;
+    bool partitions = 11;
+    repeated FilterEvents filter = 12;
+    Order order = 13; 
+}
+message EventsTopGroupRequest {
+    TypeGroup typeAccount = 1;
+    repeated int32 accounts = 2;
+    int32 top = 3;
+    StateAccount state = 4;
+    bool exclude = 5;
+    bool partitions = 6;
+    repeated FilterEvents filter = 7;
+}
+message EventsTopRequest {
+    repeated int32 accounts = 1;
+    int32 top = 2;
+    StateAccount state = 3;
+    bool exclude = 4;
+    bool partitions = 5;
+    repeated FilterEvents filter = 6;
+}
+message EventsRequest {
+    repeated int32 accounts = 1;
+    StateAccount state = 2;
+    string dateStart = 3;
+    string dateEnd = 4;
+    string startQuery = 5;
+    string endQuery = 6;
+    bool exclude = 7;
+    bool scheduled = 8;
+    bool comments = 9;
+    bool partitions = 10;
+    repeated FilterEvents filter = 11;
+    Order order = 12; 
+}
+message EventsWOAccountRequest {
+    StateAccount state = 1;
+    string dateStart = 2;
+    string dateEnd = 3;
+    string startQuery = 4;
+    string endQuery = 5;
+    bool exclude = 6;
+    bool scheduled = 7;
+    bool comments = 8;
+    bool partitions = 9;
+    repeated FilterEvents filter = 10;
+    Order order = 11; 
+}
+message FilterEvents {
+    string code = 1;
+    TypeCode type = 2;
+}
+
+
+// For Response ********************
+message AccountsEventResponse {
+    repeated AccountEventResponse data = 1;
+}
+message GroupsEventsResponse {
+    repeated GroupEventsResponse data = 1;
+}
+message AccountsTopEventResponse {
+    repeated AccountTopEventResponse data = 1;
+}
+message GroupsEventsTopResponse {
+    repeated GroupTopEventsResponse data = 1;
+}
+
+// Singles response
+message GroupEventsResponse{
+    int32 Codigo = 1;
+    string Nombre = 2;
+    int32 Tipo = 3;
+    repeated AccountEventResponse cuentas = 4;
+}
+message AccountEventResponse {
+    string Nombre = 1;
+    string Direccion = 2; 
+    string CodigoCte = 3;
+    string CodigoAbonado = 4; 
+    repeated EventoResponse eventos = 5;
+    repeated CommentResponse comentarios = 6;
+    Scheduled horario = 7;
+}
+message EventoResponse{
+    string FechaOriginal = 1;
+    string Hora = 2;
+    string CodigoEvento = 3;
+    string CodigoAlarma = 4;
+    string DescripcionAlarm = 5;
+    string CodigoZona = 6;
+    string DescripcionZona = 7;
+    string CodigoUsuario = 8;
+    string NombreUsuario = 9;
+    string DescripcionEvent = 10;
+    sint32 Particion = 11; // Negativo si la particion no existe
+    string ClaveMonitorista = 12;
+    string NomCalifEvento = 13;
+    string FechaPrimeraToma = 14;
+    string HoraPrimeraToma = 15;
+    string FechaFinalizo = 16;
+    string HoraFinalizo = 17;
+}
+
+message GroupTopEventsResponse{
+    int32 Codigo = 1;
+    string Nombre = 2;
+    int32 Tipo = 3;
+    repeated AccountTopEventResponse cuentas = 4;
+}
+message AccountTopEventResponse {
+    string Nombre = 1;
+    string Direccion = 2; 
+    string CodigoCte = 3;
+    string CodigoAbonado = 4; 
+    repeated EventoTopResponse eventos = 5;
+}
+message EventoTopResponse{
+    string FechaOriginal = 1;
+    string Hora = 2;
+    string CodigoEvento = 3;
+    string CodigoAlarma = 4;
+    string DescripcionAlarm = 5;
+    string CodigoZona = 6;
+    string DescripcionZona = 7;
+    string CodigoUsuario = 8;
+    string NombreUsuario = 9;
+    string DescripcionEvent = 10;
+    sint32 Particion = 11; // Negativo si la particion no existe
+}
+
+message CommentResponse {
+    string FechaEvento = 1;
+    string HoraEvento = 2;
+    string FechaLlamada = 3;
+    string HoraLlamada = 4;
+    string TelefonoAl = 5;
+    string Contacto = 6;
+    string Comentario = 7;
+}
+message Scheduled {
+    bool VerificaApertura = 1;
+    bool VerificaCierre = 2;
+    repeated string HorariosApertura = 3;
+    repeated string HorariosCierre = 4;
+    bool CheckAntesApertura = 5;
+    bool CheckdespuesApertura = 6;
+    bool CheckAntesCierre = 7;
+    bool CheckDespuesCierre = 8;
+    string ToleranciaAperturaAntes = 9;
+    string ToleranciaAperturaDespues = 10;
+    string ToleranciaCierreAntes = 11;
+    string ToleranciaCierreDespues = 12;
+}
